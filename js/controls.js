@@ -6,7 +6,8 @@ const keys = {
         pressed: false
     },
     w: {
-        pressed: false
+        pressed: false,
+        hold: false
     },
     space: {
         pressed: false
@@ -53,6 +54,7 @@ window.addEventListener("keyup", e=>{
         case "ArrowUp":
         case "w":
             keys.w.pressed = false
+            key.w.hold = false
             break
     }
 })
@@ -70,8 +72,9 @@ function handleControls(){
             player.velocity.x = 1.5 * 3.4
         }
 
-        if (keys.w.pressed){
-            player.velocity.y = - 7
+        if (keys.w.pressed && !keys.w.hold){
+            player.jump()
+            //keys.w.hold = true
         }
     }
 }
