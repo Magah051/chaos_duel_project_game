@@ -10,7 +10,8 @@ const keys = {
         hold: false
     },
     space: {
-        pressed: false
+        pressed: false,
+        hold: false
     },
 }
 
@@ -54,13 +55,19 @@ window.addEventListener("keyup", e=>{
         case "ArrowUp":
         case "w":
             keys.w.pressed = false
-            key.w.hold = false
+            keys.w.hold = false
+            break
+        case "z":
+        case " ":
+            keys.space.pressed = false
+            keys.space.hold = false
             break
     }
 })
 
 function handleControls(){
     movement()
+    attacks()
     function movement(){
         player.velocity.x = 0
 
@@ -74,7 +81,14 @@ function handleControls(){
 
         if (keys.w.pressed && !keys.w.hold){
             player.jump()
-            //keys.w.hold = true
+            keys.w.hold = true
+        }
+    }
+
+    function attacks(){
+        if (keys.space.pressed && !keys.space.hold){
+            player.attack()
+            keys.space.hold = true
         }
     }
 }

@@ -11,6 +11,11 @@ class Sprite {
     draw(){
         ctx.fillStyle = "white";
         ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
+
+        if (this.isAttacking){
+            ctx.fillStyle = "red";
+            ctx.fillRect(this.attackBox.position.x, this.attackBox.position.y, this.attackBox.width, this.attackBox.height)
+        }
     }
 
     update(){
@@ -31,7 +36,24 @@ class Sprite {
         this.position.x += this.velocity.x;
         this.position.y += this.velocity.y;
 
+        this.attackBox.position.x = this.position.x
+        this.attackBox.position.y = this.position.y
+
         this.draw();
+    }
+
+    attack(){
+        if (this.onAttackCooldown) return 
+        this.isAttacking = true
+        this.onAttackCooldown = true
+        setTimeout(() =>{
+            this.isAttacking = false
+        }, 100)
+        
+        setTimeout(() =>{
+            this.onAttackCooldown = false
+        }, this.attackCooldown)
+
     }
 
     jump(){
@@ -55,6 +77,19 @@ class Fighter extends Sprite {
         this.velocity = velocity
         this.width = dimensions.width
         this.height = dimensions.height
+
+        this.attackBox = {
+            position: {
+                x: this.position.x,
+                y: this.position.y,
+            },
+            width: 125,
+            height: 50
+        }
+
+        this.isAttacking
+        this.attackCooldown = 500
+        this.onAttackCooldown
 
         this.lastKeyPressed
 
