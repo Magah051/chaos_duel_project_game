@@ -11,6 +11,34 @@
     <script src="./js/controls.js"></script>
 </head>
 <body>
+    <style>
+        body {
+          background: black;
+        }
+        #audioPlayer {
+        display: none;
+      }
+    </style>
     <canvas></canvas>
+    <audio id="audioPlayer" controls>
+        <source src="assets/songs/backsound.mp3" controls autoplay type="audio/mpeg">
+      </audio>
+      
+      <script>
+        var audio = document.getElementById('audioPlayer');
+        var body = document.body;
+      
+        function playAudioOnFirstInteraction() {
+          audio.play().catch(function(error) {
+            console.log("Autoplay foi bloqueado ou não suportado: ", error);
+          });
+      
+          body.removeEventListener('click', playAudioOnFirstInteraction);
+          window.removeEventListener('keydown', playAudioOnFirstInteraction);
+        }
+      
+          body.addEventListener('click', playAudioOnFirstInteraction);
+          window.addEventListener('keydown', playAudioOnFirstInteraction);
+      </script>
 </body>
 </html>
